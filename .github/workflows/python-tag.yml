@@ -1,0 +1,36 @@
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: true
+        type: number
+      module-name:
+        required: true
+        type: string
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+
+
+jobs:
+  create-python-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Install project dependencies
+        run: pip install .
+
+      - id: release
+        uses: cdubos-fr/tag-python-project@main
+        with:
+          python-version: ${{ inputs.python-version }}
+          python-module: ${{ inputs.module-name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
