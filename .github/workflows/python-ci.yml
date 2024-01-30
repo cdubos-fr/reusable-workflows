@@ -8,7 +8,9 @@ on:
 
 jobs:
   python-ci:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,7 +18,7 @@ jobs:
       - name: Configure python
         uses: actions/setup-python@v4
         with:
-          python-version: {{ inputs.python-version }}
+          python-version: ${{ inputs.python-version }}
 
       - name: Install tox dependencies
         run: pip install tox-gh
