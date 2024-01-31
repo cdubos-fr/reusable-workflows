@@ -3,8 +3,7 @@ on:
     inputs:
       python-version:
         required: true
-        type: number
-
+        type: string
 
 jobs:
   python-ci:
@@ -18,7 +17,7 @@ jobs:
       - name: Configure python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ inputs.python-version }}
+          python-version: "${{ inputs.python-version }}"
 
       - name: Install tox dependencies
         run: pip install tox-gh

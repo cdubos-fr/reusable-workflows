@@ -3,8 +3,8 @@ on:
     inputs:
       python-version:
         required: true
-        type: number
-      module-name:
+        type: string
+      python-module:
         required: true
         type: string
     secrets:
@@ -22,7 +22,7 @@ jobs:
       - name: Configure python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ inputs.python-version }}
+          python-version: "${{ inputs.python-version }}"
 
       - name: Install project dependencies
         run: pip install .
@@ -30,7 +30,7 @@ jobs:
       - id: release
         uses: cdubos-fr/tag-python-project@main
         with:
-          python-version: ${{ inputs.python-version }}
-          python-module: ${{ inputs.module-name }}
+          python-version: "${{ inputs.python-version }}"
+          python-module: "${{ inputs.python-module }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
